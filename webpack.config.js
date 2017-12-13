@@ -1,5 +1,4 @@
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const WebpackBuildNotifierPlugin = require('webpack-build-notifier');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -13,7 +12,7 @@ const webpackConfig = {
 	],
 	output: {
 		filename: 'bundle.js',
-		path: path.resolve(__dirname, './dist/js'),
+		path: path .resolve(__dirname, './dist/js'),
 		publicPath: './js',
 	},
 	module: {
@@ -35,37 +34,50 @@ const webpackConfig = {
 			},
 			{
 				test: /\.css$/,
-				loader: ['css-hot-loader'].concat(ExtractTextPlugin.extract({
-					fallback: 'style-loader',
-					use: [
-						{
-							loader: 'css-loader',
-						},
-						{
-							loader: 'postcss-loader',
-							options: {
-								plugins: () => (
-									[
-										require('postcss-cssnext')(
-											{ browsers: ['> 0.01%'] }
-										),
-										require('postcss-flexbugs-fixes')
-									]
-								)
-							}
+				use: [
+					{
+						loader: 'style-loader',
+					},
+					{
+						loader: 'css-loader',
+					},
+					{
+						loader: 'postcss-loader',
+						options: {
+							plugins: () => (
+								[
+									require('postcss-cssnext')(
+										{ browsers: ['> 0.01%'] }
+									),
+									require('postcss-flexbugs-fixes')
+								]
+							)
 						}
-					]
-				}))
+					}
+				]
 			},
 			{
-				test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
+				test: /\.(png|jpe?g|gif)$/i,
 				use: [
 					{
 						loader: 'file-loader',
 						options: {
 							name: '[name].[ext]',
 							outputPath: '../img/',
-							publicPath: '/img/',
+							publicPath: '',
+						}
+					}
+				]
+			},
+			{
+				test: /\.(svg|eot|ttf|woff|woff2)$/i,
+				use: [
+					{
+						loader: 'file-loader',
+						options: {
+							name: '[name].[ext]',
+							outputPath: '../fonts/',
+							publicPath: '',
 						}
 					}
 				]
@@ -90,7 +102,6 @@ const webpackConfig = {
 			filename: '../index.html',
 		}),
 		new HtmlWebpackPugPlugin(),
-		new ExtractTextPlugin( '../css/style.css' ),
 		new BrowserSyncPlugin({
 			host: 'localhost',
 			port: 3000,
@@ -103,5 +114,4 @@ const webpackConfig = {
 		})
 	]
 }
-
 module.exports = webpackConfig;

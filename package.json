@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack -w",
-    "compile-pug": "pug --hierarchy -o public/ src/"
+    "compile-pug": "pug --hierarchy -o public/ src/",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "author": "",
   "license": "ISC",
@@ -19,7 +21,8 @@
     "pug": "^2.0.0-rc.4",
     "pug-cli": "^1.0.0-alpha6",
     "pug-html-loader": "^1.1.5",
-    "pug-loader": "^2.3.0"
+    "pug-loader": "^2.3.0",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "autoprefixer-loader": "^3.2.0",
@@ -44,5 +47,6 @@
     "webpack": "^3.8.1",
     "webpack-build-notifier": "^0.1.16",
     "webpack-stream": "^4.0.0"
-  }
+  },
+  "snyk": true
 }
